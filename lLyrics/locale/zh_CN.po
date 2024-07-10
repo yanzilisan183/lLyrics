@@ -6,149 +6,149 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: lLyrics\n"
+"Report-Msgid-Bugs-To: https://github.com/yanzilisan183/lLyrics/issues\n"
 "POT-Creation-Date: 2016-02-04 16:47+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-07-10 13:44+0800\n"
+"Last-Translator: YunfieLi <yanzilisan183@sina.com>\n"
+"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"Language: zh_CN"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../lLyrics.py:256 ../lLyrics.py:275
 msgid "Lyrics"
-msgstr ""
+msgstr "歌词"
 
 #: ../lLyrics.py:259
 msgid "Display lyrics for the current playing song"
-msgstr ""
+msgstr "显示当前播放歌曲的歌词"
 
 #: ../lLyrics.py:263
 msgid "Show lyrics"
-msgstr ""
+msgstr "显示歌词"
 
 #: ../lLyrics.py:264
 msgid "Search and display lyrics for this song"
-msgstr ""
+msgstr "搜索并显示此歌曲的歌词"
 
 #. create save and cancel buttons for edited lyrics
 #: ../lLyrics.py:323
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: ../lLyrics.py:325
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. button for closing on demand lyrics
 #: ../lLyrics.py:332
 msgid "Back to playing song"
-msgstr ""
+msgstr "返回到播放中的歌曲"
 
 #: ../lLyrics.py:366 ../lLyrics.py:404 ../lLyrics.py:839
 msgid "From cache file"
-msgstr ""
+msgstr "来自缓存文件"
 
 #: ../lLyrics.py:371 ../Config.py:302
 msgid "Sources"
-msgstr ""
+msgstr "来源"
 
 #: ../lLyrics.py:375
 msgid "Scan next source"
-msgstr ""
+msgstr "扫描下一个源"
 
 #: ../lLyrics.py:376
 msgid "Scan all sources"
-msgstr ""
+msgstr "扫描所有源"
 
 #: ../lLyrics.py:378
 msgid "Search online"
-msgstr ""
+msgstr "在线搜索"
 
 #: ../lLyrics.py:380
 msgid "Mark as instrumental"
-msgstr ""
+msgstr "标记为乐曲"
 
 #: ../lLyrics.py:382
 msgid "Clear lyrics"
-msgstr ""
+msgstr "干净的歌词"
 
 #: ../lLyrics.py:383
 msgid "Edit lyrics"
-msgstr ""
+msgstr "编辑歌词"
 
 #: ../lLyrics.py:387
 msgid "Preferences"
-msgstr ""
+msgstr "首选项"
 
 #: ../lLyrics.py:603
 msgid "lLyrics Preferences"
-msgstr ""
+msgstr "lLyrics首选项"
 
 #: ../lLyrics.py:660 ../lLyrics.py:683 ../lLyrics.py:713 ../lLyrics.py:737
 msgid "searching lyrics..."
-msgstr ""
+msgstr "正在搜索歌词……"
 
 #: ../lLyrics.py:845
 msgid "No lyrics found"
-msgstr ""
+msgstr "找不到歌词"
 
 #: ../Config.py:146
 msgid "Show sidebar on first playback"
-msgstr ""
+msgstr "首次播放时显示侧边栏"
 
 #: ../Config.py:159
 msgid "Save lyrics "
-msgstr ""
+msgstr "保存歌词 "
 
 #: ../Config.py:163
 msgid ""
 "Whether to automatically save retrieved lyrics in the folder specified below"
-msgstr ""
+msgstr "是否将检索到的歌词自动保存在下面指定的文件夹中"
 
 #: ../Config.py:183
 msgid "default"
-msgstr ""
+msgstr "默认"
 
 #: ../Config.py:186
 msgid "Folder for lyrics"
-msgstr ""
+msgstr "歌词文件夹"
 
 #: ../Config.py:200
 msgid "Always ignore parentheses in song title"
-msgstr ""
+msgstr "总是忽略歌曲标题中的括号"
 
 #: ../Config.py:203
 msgid ""
 "When turned off, only parentheses containing specific strings (e.g. 'remix', "
 "'live', 'edit', etc) are filtered"
-msgstr ""
+msgstr "选项关闭时，仅包含特定字符串的括号（例如“remix”，“live”、“edit”等）会被过滤"
 
 #. check buttons for lyric sources
 #: ../Config.py:222
 msgid "Sources:"
-msgstr ""
+msgstr "来源："
 
 #: ../Config.py:267
 msgid "Hide sidebar label"
-msgstr ""
+msgstr "隐藏侧边栏标签"
 
 #: ../Config.py:281
 msgid "Show lyrics in left sidebar instead of right one"
-msgstr ""
+msgstr "在左侧边栏而不是右侧边栏中显示歌词"
 
 #: ../Config.py:284
 msgid ""
 "You have to disable and re-enable this plugin or restart Rhythmbox to apply "
 "changes here"
-msgstr ""
+msgstr "您必须禁用并重新启用此插件，或者重新启动Rhythmbox才能使此选项更改生效"
 
 #: ../Config.py:301
 msgid "General"
-msgstr ""
+msgstr "通用"
 
 #: ../Config.py:303
 msgid "Appearance"
-msgstr ""
+msgstr "外观"

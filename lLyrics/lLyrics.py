@@ -29,6 +29,7 @@ from gi.repository import Pango
 from gi.repository import GdkPixbuf
 from gi.repository import GLib
 
+import LocalSameFolderParser
 import ChartlyricsParser
 import LyricwikiParser
 import MetrolyricsParser
@@ -37,6 +38,7 @@ import AZLyricsParser
 import LyricsmaniaParser
 import DarklyricsParser
 import GeniusParser
+import LyricsNMusicParser
 import VagalumeParser
 import Util
 
@@ -93,8 +95,9 @@ LYRICS_TITLE_STRIP = ["\(live[^\)]*\)", "\(acoustic[^\)]*\)", "\([^\)]*mix\)", "
 LYRICS_TITLE_REPLACE = [("/", "-"), (" & ", " and ")]
 LYRICS_ARTIST_REPLACE = [("/", "-"), (" & ", " and ")]
 
-LYRICS_SOURCES = ["Lyricwiki.org", "Letras.terra.com.br", "Metrolyrics.com", "AZLyrics.com", "Lyricsmania.com",
-                  "Vagalume.com.br", "Genius.com", "Darklyrics.com", "Chartlyrics.com"]
+LYRICS_SOURCES = ["LocalSameFolder", "Lyricwiki.org", "Letras.terra.com.br", "Metrolyrics.com", "AZLyrics.com",
+                  "Lyricsnmusic.com", "Lyricsmania.com", "Vagalume.com.br", "Genius.com", "Darklyrics.com",
+                  "Chartlyrics.com"]
 
 
 class lLyrics(GObject.Object, Peas.Activatable):
@@ -113,11 +116,12 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.appshell = ApplicationShell(self.shell)
 
         # Create dictionary which assigns sources to their corresponding modules
-        self.dict = dict({"Lyricwiki.org": LyricwikiParser, "Letras.terra.com.br": LetrasTerraParser,
+        self.dict = dict({"LocalSameFolder": LocalSameFolderParser,
+                          "Lyricwiki.org": LyricwikiParser, "Letras.terra.com.br": LetrasTerraParser,
                           "Metrolyrics.com": MetrolyricsParser, "AZLyrics.com": AZLyricsParser,
                           "Lyricsmania.com": LyricsmaniaParser, "Chartlyrics.com": ChartlyricsParser,
                           "Darklyrics.com": DarklyricsParser, "Genius.com": GeniusParser,
-                          "Vagalume.com.br": VagalumeParser})
+                          "Lyricsnmusic.com": LyricsNMusicParser, "Vagalume.com.br": VagalumeParser})
         self.add_builtin_lyrics_sources()
 
         # Get the user preferences
@@ -192,13 +196,13 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.current_source = None
         self.artist = None
         self.title = None
+        self.location = None
         self.clean_artist = None
         self.clean_title = None
         self.path = None
         self.lyrics_before_edit = None
         self.edit_event = None
         self.path_before_edit = None
-        self.sources = None
         self.cache = None
         self.lyrics_folder = None
         self.ignore_brackets = None
@@ -302,6 +306,9 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.textview.set_pixels_above_lines(5)
         self.textview.set_pixels_below_lines(5)
         self.textview.set_wrap_mode(Gtk.WrapMode.WORD)
+        style_context = self.textview.get_style_context()
+        background_color = style_context.get_background_color(Gtk.StateFlags.NORMAL)
+        foreground_color = style_context.get_color(Gtk.StateFlags.NORMAL)
 
         # create a ScrollView
         sw = Gtk.ScrolledWindow()
@@ -316,7 +323,8 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.tag = self.textbuffer.create_tag(None, underline=Pango.Underline.SINGLE, weight=600,
                                               pixels_above_lines=10, pixels_below_lines=20)
         # tag to highlight synchronized lyrics
-        self.sync_tag = self.textbuffer.create_tag(None, weight=600)
+        self.sync_tag = self.textbuffer.create_tag(None, weight=600, background_rgba=foreground_color,
+                                                   foreground_rgba=background_color)
 
         # create save and cancel buttons for edited lyrics
         save_button = Gtk.Button.new_with_label(_("Save"))
@@ -472,6 +480,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         # get the song data
         self.artist = entry.get_string(RB.RhythmDBPropType.ARTIST)
         self.title = entry.get_string(RB.RhythmDBPropType.TITLE)
+        self.location = entry.get_string(RB.RhythmDBPropType.LOCATION)
 
         print("search lyrics for " + self.artist + " - " + self.title)
 
@@ -514,8 +523,9 @@ class lLyrics(GObject.Object, Peas.Activatable):
 
     def build_cache_path(self, artist, title):
         artist_folder = os.path.join(self.lyrics_folder, artist[:128])
-        if not os.path.exists(artist_folder):
-            os.mkdir(artist_folder)
+        if self.settings["cache-lyrics"]:
+            if not os.path.exists(artist_folder):
+                os.mkdir(artist_folder)
 
         return os.path.join(artist_folder, title[:128] + '.lyric')
 
@@ -809,11 +819,14 @@ class lLyrics(GObject.Object, Peas.Activatable):
         # Playing song might change during search, so we want to 
         # conserve the correct cache path.
         path = self.path
-
+        location = self.location
         print("source: " + source)
         self.current_source = source
+        if source == "LocalSameFolder":
+            parser = self.dict[source].Parser(artist, title, location)
+        else:
+            parser = self.dict[source].Parser(artist, title)
 
-        parser = self.dict[source].Parser(artist, title)
         try:
             lyrics = parser.parse()
         except Exception as e:
@@ -824,7 +837,6 @@ class lLyrics(GObject.Object, Peas.Activatable):
         if lyrics != "":
             print("got lyrics from source")
             lyrics = "%s\n\n(lyrics from %s)" % (lyrics, source)
-
             if self.cache:
                 self.write_lyrics_to_cache(path, lyrics)
 
