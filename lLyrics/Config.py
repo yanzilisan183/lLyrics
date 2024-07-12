@@ -315,7 +315,10 @@ class ConfigDialog(GObject.Object, PeasGtk.Configurable):
         if checkbutton.get_active():
             entries.append(source)
         else:
-            entries.remove(source)
+            try:
+                entries.remove(source)
+            except:
+                entries.remove(_(source))
 
         self.settings["active-sources"] = entries
 

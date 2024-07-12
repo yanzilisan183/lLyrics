@@ -1,9 +1,9 @@
 lLyrics
 ===============
 
-lLyrics is a plugin for [Rhythmbox](http://projects.gnome.org/rhythmbox/), which displays lyrics for the current playing song in the sidebar.
+lLyrics 是 [Rhythmbox](http://projects.gnome.org/rhythmbox/) 的插件，在侧边栏中显示当前播放歌曲的歌词。
 
-It is intended as a replacement of the built-in lyrics plugin of Rhythmbox with more features, better UI integration and more lyrics engines.
+它旨在取代 Rhythmbox 的内置歌词插件，提供更多功能、更好的UI集成和更多的歌词引擎。
 
 
 
@@ -12,9 +12,11 @@ It is intended as a replacement of the built-in lyrics plugin of Rhythmbox with 
 
 
 
-Lyrics sources
+歌词来源
 ---------------
 
+  - LocalSameFolder (本地歌曲相同目录下搜索)
+  - Kugou.com (酷狗音乐)
   - Lyricwiki.org
   - Letras.terra.com.br
   - Vagalume.com.br
@@ -26,83 +28,83 @@ Lyrics sources
   - Darklyrics.com
   - Chartlyrics.com
 
-It is also possible to retrieve lyrics from the built-in Rhythmbox lyrics plugin, but this is not recommended since it has some bugs and may cause instabilities.
+也可以从内置的 Rhythmbox 歌词插件中检索歌词，但不建议这样做，因为它有一些错误，可能会导致不稳定。
 
 
 
 
-Requirements
+要求
 ---------------
 
-The 'master' branch supports Rhythmbox 3.0 and above. **It is incompatible with older Rhythmbox 2.xx versions!**
+“master”分支支持 Rhythmbox 3.0及更高版本。**它与旧的 Rhythmbox 2.xx 版本不兼容！**
 
-To get the plugin for Rhythmbox 2.xx, change to branch 'RB2'! It provides the last version compatible with Rhythmbox 2.xx, but please note, that it will not be updated or developed any further.
+要从源代码安装 lLyrics，您将需要包 `gettext`。
 
-To install lLyrics from source you will need the package `gettext`.
+#### 依赖项 ####
 
-#### Dependencies ####
-
-lLyrics can be run without the need of any additional packages, but it is recommended to install the python module **"chardet"** for better handling of different encodings.
+lLyrics 可以在不需要任何额外包的情况下运行，但建议安装 python 模块 **"chardet"**，以便更好地处理不同的编码。
 
 
 
-Installation
+安装
 ---------------
 
-#### Ubuntu & derivates: PPA ####
+#### Ubuntu 及其衍生版: PPA ####
 
-In Ubuntu based distribution, you can install this plugin via [this PPA by fossfreedom](https://launchpad.net/~fossfreedom/+archive/rhythmbox-plugins).
+在基于 Ubuntu 的发行版中，您可以通过 [由 fossfreedom 提供的 PPA](https://launchpad.net/~fossfreedom/+archive/rhythmbox-plugins) 安装插件(原始分支)。
 
 #### Archlinux: AUR ####
 
-Archlinux user can install the plugin via [this AUR package](https://aur.archlinux.org/packages/rhythmbox-llyrics/).
+Archlinux 用户可以通过 [此 AUR 包](https://aur.archlinux.org/packages/rhythmbox-llyrics/) 安装插件(原始分支)。
 
-#### Manual installation ####
+#### 手动安装 ####
 
-	1.) Press the "Download ZIP" button and extract the .zip file.
+	1.) 点击“下载ZIP”按钮并解压.ZIP文件。
 
-	2.) Change to the extracted folder and open a terminal.
+	2.) 打开终端，进入到提取的文件夹。
 
-	3.) Run `make install`.
+	3.) 运行 `make install`。
 
-	4.) Enable the plugin in Rhythmbox.
+	4.) 在 Rhythmbox 中启用插件。
 
-It will ask for your sudo password, but don't worry, it is only required to install the schema file that is needed to save your preferences.
+它会询问您的 sudo 密码，但别担心，它只需要安装保存您的首选项所需的模式文件。
 
-If you want to install the plugin systemwide for all users, run `make install-systemwide` in step 3.
+如果要为所有用户在系统范围内安装插件，请在步骤3中运行 `make install-systemwide`。
 
-To uninstall, run `make uninstall`.
+若要卸载，请运行 `make uninstall`。
 
-Note that you need Rhythmbox version 2.90 or higher to run lLyrics!
-
-
+请注意，您需要 Rhythmbox 版本 3.0 或更高版本才能运行此分支版本的 lLyrics！
 
 
-Features
+
+
+
+特征
 ---------------
-  - Support for a lot of different lyrics sites (see above)
-  - Integration into the Rhythmbox UI
-  - Lyrics sources can be prioritised and deactivated
-  - Automatically display lyrics on playback or only on-demand
-  - Save retrieved lyrics to a file (can be deactivated)
-  - Possibility to edit lyrics
-  - Correct artist/title tag via Last.fm API for better results
-  - Appearance customizable to adapt to your desires or your available screen space
-  - Basic support for synchronized lyrics
-  - more...
+  - 支持许多不同的歌词网站（见上文）
+  - 集成到 Rhythmbox UI
+  - 歌词来源可以优先排序和停用
+  - 播放时自动显示歌词或仅按需显示
+  - 将检索到的歌词保存为本地文件（可以停用）
+  - 可以编辑歌词
+  - 通过 Last.fm API更正艺术家/标题标签以获得更好的结果
+  - 外观可定制，以适应您的需求或可用的屏幕空间
+  - 对同步歌词的基本支持
+  - 更多……
 
 
 
 
-Credits
+鸣谢
 ---------------
 
-I was inspired by the awesome Songbird plugin [MLyrics](https://github.com/FreeleX/MLyrics).
-Thanks to all who contribute, report issues or help in any other way to make this plugin better.
+我受到了很棒的 Songbird 插件[MLyrics](https://github.com/FreeleX/MLyrics)的启发。
+感谢所有贡献、报告问题或以任何其他方式帮助改进此插件的人。
 
-You will always find the latest version on [GitHub](https://github.com/dmo60/lLyrics).
-Please report bugs, issues or feature requests there.
+您将始终在[GitHub](https://github.com/dmo60/lLyrics)上找到（原始分支的）最新版本。
+请在那里报告错误、问题或功能请求。
 
-Help with translations is always appreciated!
+我们非常感谢翻译方面的帮助！
 
-All lyrics are property and copyright of their owners.
+所有歌词均为其所有者的财产和版权。
+

@@ -19,7 +19,6 @@ import sys
 import unicodedata
 
 from threading import Thread
-
 from gi.repository import GObject
 from gi.repository import Peas
 from gi.repository import Gdk
@@ -30,6 +29,7 @@ from gi.repository import GdkPixbuf
 from gi.repository import GLib
 
 import LocalSameFolderParser
+import KugouParser
 import ChartlyricsParser
 import LyricwikiParser
 import MetrolyricsParser
@@ -41,15 +41,11 @@ import GeniusParser
 import LyricsNMusicParser
 import VagalumeParser
 import Util
-
 from lLyrics_rb3compat import ActionGroup
 from lLyrics_rb3compat import ApplicationShell
-
 from Config import Config
 from Config import ConfigDialog
-
 import gettext
-
 gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
 
 view_menu_ui = """
@@ -95,9 +91,9 @@ LYRICS_TITLE_STRIP = ["\(live[^\)]*\)", "\(acoustic[^\)]*\)", "\([^\)]*mix\)", "
 LYRICS_TITLE_REPLACE = [("/", "-"), (" & ", " and ")]
 LYRICS_ARTIST_REPLACE = [("/", "-"), (" & ", " and ")]
 
-LYRICS_SOURCES = ["LocalSameFolder", "Lyricwiki.org", "Letras.terra.com.br", "Metrolyrics.com", "AZLyrics.com",
+LYRICS_SOURCES = [_("LocalSameFolder"), "Lyricwiki.org", "Letras.terra.com.br", "Metrolyrics.com", "AZLyrics.com",
                   "Lyricsnmusic.com", "Lyricsmania.com", "Vagalume.com.br", "Genius.com", "Darklyrics.com",
-                  "Chartlyrics.com"]
+                  "Chartlyrics.com", _("Kugou.com")]
 
 
 class lLyrics(GObject.Object, Peas.Activatable):
@@ -116,7 +112,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.appshell = ApplicationShell(self.shell)
 
         # Create dictionary which assigns sources to their corresponding modules
-        self.dict = dict({"LocalSameFolder": LocalSameFolderParser,
+        self.dict = dict({_("LocalSameFolder"): LocalSameFolderParser, _("Kugou.com"): KugouParser,
                           "Lyricwiki.org": LyricwikiParser, "Letras.terra.com.br": LetrasTerraParser,
                           "Metrolyrics.com": MetrolyricsParser, "AZLyrics.com": AZLyricsParser,
                           "Lyricsmania.com": LyricsmaniaParser, "Chartlyrics.com": ChartlyricsParser,
@@ -197,6 +193,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.artist = None
         self.title = None
         self.location = None
+        self.duration = -1
         self.clean_artist = None
         self.clean_title = None
         self.path = None
@@ -481,6 +478,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.artist = entry.get_string(RB.RhythmDBPropType.ARTIST)
         self.title = entry.get_string(RB.RhythmDBPropType.TITLE)
         self.location = entry.get_string(RB.RhythmDBPropType.LOCATION)
+        self.duration = entry.get_ulong(RB.RhythmDBPropType.DURATION)
 
         print("search lyrics for " + self.artist + " - " + self.title)
 
@@ -557,10 +555,12 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.scan_all_sources(self.clean_artist, self.clean_title, False)
 
     def search_online_action_callback(self, action):
-        webbrowser.open("http://www.google.com/search?q=%s+%s+lyrics" % (self.clean_artist, self.clean_title))
+        # Allow changing the default search engine through internationalization
+        webbrowser.open(_("http://www.google.com/search?q=%s+%s+lyrics") % (self.clean_artist, self.clean_title))
 
     def instrumental_action_callback(self, action):
-        lyrics = "-- Instrumental --"
+        gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
+        lyrics = "-- " + _("Instrumental") + " --"
         self.write_lyrics_to_cache(self.path, lyrics)
         self.current_source = None
         Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, self.show_lyrics, lyrics)
@@ -606,6 +606,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.hbox.show()
 
     def preferences_dialog_action_callback(self, action):
+        gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
         content = ConfigDialog().do_create_configure_widget()
 
         dialog = Gtk.Dialog(_('lLyrics Preferences'), self.shell.get_property('window'),
@@ -665,6 +666,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         # If playing song changed, set "searching lyrics..." (might be overwritten
         # immediately, if thread for the new song already found lyrics)
         if self.path != self.path_before_edit:
+            gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
             self.textbuffer.set_text(_("searching lyrics..."))
 
         self.set_menu_sensitive(True)
@@ -688,6 +690,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
             end.forward_to_line_end()
             self.textbuffer.apply_tag(self.tag, start, end)
         else:
+            gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
             self.textbuffer.set_text(_("searching lyrics..."))
 
         self.set_menu_sensitive(True)
@@ -718,6 +721,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.textbuffer.set_text(text)
 
     def scan_source(self, source, artist, title):
+        gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
         Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, self.set_displayed_text, _("searching lyrics..."))
 
         newthread = Thread(target=self._scan_source_thread, args=(source, artist, title))
@@ -742,6 +746,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
 
     def scan_all_sources(self, artist, title, cache):
         if self.edit_event.is_set():
+            gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
             Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, self.set_displayed_text, _("searching lyrics..."))
 
         newthread = Thread(target=self._scan_all_sources_thread, args=(artist, title, cache))
@@ -820,10 +825,13 @@ class lLyrics(GObject.Object, Peas.Activatable):
         # conserve the correct cache path.
         path = self.path
         location = self.location
+        duration = self.duration
         print("source: " + source)
         self.current_source = source
-        if source == "LocalSameFolder":
+        if source == _("LocalSameFolder"):
             parser = self.dict[source].Parser(artist, title, location)
+        elif source == _("Kugou.com"):
+            parser = self.dict[source].Parser(artist, title, duration)
         else:
             parser = self.dict[source].Parser(artist, title)
 
@@ -836,13 +844,15 @@ class lLyrics(GObject.Object, Peas.Activatable):
 
         if lyrics != "":
             print("got lyrics from source")
-            lyrics = "%s\n\n(lyrics from %s)" % (lyrics, source)
+            gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
+            lyrics = ("%s\n\n" + _("(lyrics from %s)")) % (lyrics, source)
             if self.cache:
                 self.write_lyrics_to_cache(path, lyrics)
 
         return lyrics
 
     def show_lyrics(self, lyrics):
+        gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
         if self.current_source is None:
             self.set_radio_menu_item_active("SelectNothing")
         elif self.current_source == "From cache file":

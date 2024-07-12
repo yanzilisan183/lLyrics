@@ -1,21 +1,30 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Chinese translations for yanzilisan package.
+# Copyright (C) 2024 THE yanzilisan'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the yanzilisan package.
+# Li Yunfei <yanzilisan183@sina.com>, 2024.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lLyrics\n"
+"Project-Id-Version: lLyrics/yanzilisan183\n"
 "Report-Msgid-Bugs-To: https://github.com/yanzilisan183/lLyrics/issues\n"
-"POT-Creation-Date: 2016-02-04 16:47+0100\n"
-"PO-Revision-Date: 2024-07-10 13:44+0800\n"
-"Last-Translator: YunfieLi <yanzilisan183@sina.com>\n"
-"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
-"Language: zh_CN"
+"POT-Creation-Date: 2024-07-12 16:02+0800\n"
+"PO-Revision-Date: 2024-07-12 16:04+0800\n"
+"Last-Translator:  Li Yunfie <yanzilisan183@sina.com>\n"
+"Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#. Create dictionary which assigns sources to their corresponding modules
+#: ../lLyrics.py:94 ../lLyrics.py:115 ../lLyrics.py:830
+msgid "LocalSameFolder"
+msgstr "本地相同目录"
+
+#: ../lLyrics.py:96 ../lLyrics.py:115 ../lLyrics.py:832
+msgid "Kugou.com"
+msgstr "酷狗音乐"
 
 #: ../lLyrics.py:256 ../lLyrics.py:275
 msgid "Lyrics"
@@ -34,64 +43,79 @@ msgid "Search and display lyrics for this song"
 msgstr "搜索并显示此歌曲的歌词"
 
 #. create save and cancel buttons for edited lyrics
-#: ../lLyrics.py:323
+#: ../lLyrics.py:327
 msgid "Save"
 msgstr "保存"
 
-#: ../lLyrics.py:325
+#: ../lLyrics.py:329
 msgid "Cancel"
 msgstr "取消"
 
 #. button for closing on demand lyrics
-#: ../lLyrics.py:332
+#: ../lLyrics.py:336
 msgid "Back to playing song"
 msgstr "返回到播放中的歌曲"
 
-#: ../lLyrics.py:366 ../lLyrics.py:404 ../lLyrics.py:839
+#: ../lLyrics.py:370 ../lLyrics.py:408 ../lLyrics.py:858
 msgid "From cache file"
 msgstr "来自缓存文件"
 
-#: ../lLyrics.py:371 ../Config.py:302
+#: ../lLyrics.py:375 ../Config.py:302
 msgid "Sources"
 msgstr "来源"
 
-#: ../lLyrics.py:375
+#: ../lLyrics.py:379
 msgid "Scan next source"
 msgstr "扫描下一个源"
 
-#: ../lLyrics.py:376
+#: ../lLyrics.py:380
 msgid "Scan all sources"
 msgstr "扫描所有源"
 
-#: ../lLyrics.py:378
+#: ../lLyrics.py:382
 msgid "Search online"
 msgstr "在线搜索"
 
-#: ../lLyrics.py:380
+#: ../lLyrics.py:384
 msgid "Mark as instrumental"
-msgstr "标记为乐曲"
+msgstr "标记为纯音乐"
 
-#: ../lLyrics.py:382
+#: ../lLyrics.py:386
 msgid "Clear lyrics"
-msgstr "干净的歌词"
+msgstr "清除歌词"
 
-#: ../lLyrics.py:383
+#: ../lLyrics.py:387
 msgid "Edit lyrics"
 msgstr "编辑歌词"
 
-#: ../lLyrics.py:387
+#: ../lLyrics.py:391
 msgid "Preferences"
 msgstr "首选项"
 
-#: ../lLyrics.py:603
+#. Allow changing the default search engine through internationalization
+#: ../lLyrics.py:559
+#, python-format
+msgid "http://www.google.com/search?q=%s+%s+lyrics"
+msgstr "https://www.baidu.com/baidu?ie=utf-8&wd=%s+%s+歌词"
+
+#: ../lLyrics.py:563
+msgid "Instrumental"
+msgstr "纯音乐"
+
+#: ../lLyrics.py:612
 msgid "lLyrics Preferences"
 msgstr "lLyrics首选项"
 
-#: ../lLyrics.py:660 ../lLyrics.py:683 ../lLyrics.py:713 ../lLyrics.py:737
+#: ../lLyrics.py:670 ../lLyrics.py:694 ../lLyrics.py:725 ../lLyrics.py:750
 msgid "searching lyrics..."
 msgstr "正在搜索歌词……"
 
-#: ../lLyrics.py:845
+#: ../lLyrics.py:848
+#, python-format
+msgid "(lyrics from %s)"
+msgstr "（歌词来自于 %s）"
+
+#: ../lLyrics.py:865
 msgid "No lyrics found"
 msgstr "找不到歌词"
 
