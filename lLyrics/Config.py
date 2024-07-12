@@ -230,7 +230,10 @@ class ConfigDialog(GObject.Object, PeasGtk.Configurable):
         vbox.set_margin_bottom(5)
         for source in self.settings["scanning-order"]:
             hbox = Gtk.HBox()
-            check = Gtk.CheckButton(_(source))
+            i18n_title = _(source)
+            if i18n_title != source:
+            	i18n_title += "(" + source + ")"
+            check = Gtk.CheckButton(i18n_title)
             check.set_active(source in self.settings["active-sources"])
             check.connect("toggled", self.source_toggled, source)
             hbox.pack_start(check, True, True, 3)

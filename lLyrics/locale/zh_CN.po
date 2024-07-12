@@ -20,7 +20,7 @@ msgstr ""
 #. Create dictionary which assigns sources to their corresponding modules
 #: ../lLyrics.py:94 ../lLyrics.py:115 ../lLyrics.py:830
 msgid "LocalSameFolder"
-msgstr "本地相同目录"
+msgstr "所在目录下同名.lrc"
 
 #: ../lLyrics.py:96 ../lLyrics.py:115 ../lLyrics.py:832
 msgid "Kugou.com"

@@ -38,7 +38,6 @@ import AZLyricsParser
 import LyricsmaniaParser
 import DarklyricsParser
 import GeniusParser
-import LyricsNMusicParser
 import VagalumeParser
 import Util
 from lLyrics_rb3compat import ActionGroup
@@ -91,9 +90,9 @@ LYRICS_TITLE_STRIP = ["\(live[^\)]*\)", "\(acoustic[^\)]*\)", "\([^\)]*mix\)", "
 LYRICS_TITLE_REPLACE = [("/", "-"), (" & ", " and ")]
 LYRICS_ARTIST_REPLACE = [("/", "-"), (" & ", " and ")]
 
-LYRICS_SOURCES = [_("LocalSameFolder"), "Lyricwiki.org", "Letras.terra.com.br", "Metrolyrics.com", "AZLyrics.com",
-                  "Lyricsnmusic.com", "Lyricsmania.com", "Vagalume.com.br", "Genius.com", "Darklyrics.com",
-                  "Chartlyrics.com", _("Kugou.com")]
+LYRICS_SOURCES = ["Lyricwiki.org", "Letras.terra.com.br", "Metrolyrics.com", "AZLyrics.com", "Lyricsmania.com",
+                  "Vagalume.com.br", "Genius.com", "Darklyrics.com", "Chartlyrics.com", "LocalSameFolder",
+                  "Kugou.com"]
 
 
 class lLyrics(GObject.Object, Peas.Activatable):
@@ -112,12 +111,12 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.appshell = ApplicationShell(self.shell)
 
         # Create dictionary which assigns sources to their corresponding modules
-        self.dict = dict({_("LocalSameFolder"): LocalSameFolderParser, _("Kugou.com"): KugouParser,
-                          "Lyricwiki.org": LyricwikiParser, "Letras.terra.com.br": LetrasTerraParser,
+        self.dict = dict({"Lyricwiki.org": LyricwikiParser, "Letras.terra.com.br": LetrasTerraParser,
                           "Metrolyrics.com": MetrolyricsParser, "AZLyrics.com": AZLyricsParser,
                           "Lyricsmania.com": LyricsmaniaParser, "Chartlyrics.com": ChartlyricsParser,
                           "Darklyrics.com": DarklyricsParser, "Genius.com": GeniusParser,
-                          "Lyricsnmusic.com": LyricsNMusicParser, "Vagalume.com.br": VagalumeParser})
+                          "Vagalume.com.br": VagalumeParser, "LocalSameFolder": LocalSameFolderParser,
+                          "Kugou.com": KugouParser,})
         self.add_builtin_lyrics_sources()
 
         # Get the user preferences
@@ -828,9 +827,9 @@ class lLyrics(GObject.Object, Peas.Activatable):
         duration = self.duration
         print("source: " + source)
         self.current_source = source
-        if source == _("LocalSameFolder"):
+        if source == "LocalSameFolder":
             parser = self.dict[source].Parser(artist, title, location)
-        elif source == _("Kugou.com"):
+        elif source == "Kugou.com":
             parser = self.dict[source].Parser(artist, title, duration)
         else:
             parser = self.dict[source].Parser(artist, title)
@@ -845,7 +844,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         if lyrics != "":
             print("got lyrics from source")
             gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
-            lyrics = ("%s\n\n" + _("(lyrics from %s)")) % (lyrics, source)
+            lyrics = ("%s\n\n" + _("(lyrics from %s)")) % (lyrics, _(source))
             if self.cache:
                 self.write_lyrics_to_cache(path, lyrics)
 

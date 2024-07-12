@@ -15,14 +15,13 @@ lLyrics 是 [Rhythmbox](http://projects.gnome.org/rhythmbox/) 的插件，在侧
 歌词来源
 ---------------
 
-  - LocalSameFolder (本地歌曲相同目录下搜索)
-  - Kugou.com (酷狗音乐)
+  - 所在目录下同名.lrc(LocalSameFolder)
+  - 酷狗音乐(Kugou.com)
   - Lyricwiki.org
   - Letras.terra.com.br
   - Vagalume.com.br
   - Metrolyrics.com
   - AZLyrics.com
-  - Lyricsnmusic.com
   - Lyricsmania.com
   - Genius.com
   - Darklyrics.com
@@ -98,7 +97,7 @@ Archlinux 用户可以通过 [此 AUR 包](https://aur.archlinux.org/packages/rh
 鸣谢
 ---------------
 
-我受到了很棒的 Songbird 插件[MLyrics](https://github.com/FreeleX/MLyrics)的启发。
+我(指原作者Timo Loewe)受到了很棒的 Songbird 插件 [MLyrics](https://github.com/FreeleX/MLyrics) 的启发。
 感谢所有贡献、报告问题或以任何其他方式帮助改进此插件的人。
 
 您将始终在[GitHub](https://github.com/dmo60/lLyrics)上找到（原始分支的）最新版本。
