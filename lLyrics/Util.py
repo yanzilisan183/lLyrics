@@ -83,9 +83,14 @@ def parse_lrc(data):
 
 
 def time_to_seconds(time):
+    # Accurate to 1/100 second
     time = time[1:-1].replace(":", ".")
     t = time.split(".")
-    return 60 * int(t[0]) + int(t[1])
+    try:
+        seconds = 60 * int(t[0]) + int(t[1]) + float("0." + t[2][:2])
+    except:
+        seconds = 60 * int(t[0]) + int(t[1])
+    return seconds
 
 
 def bytes_to_string(data):

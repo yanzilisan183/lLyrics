@@ -1,3 +1,5 @@
 *.pyc
+*.bak
+*.old
 .idea/
 lLyrics/ParserTest.py

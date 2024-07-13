@@ -149,7 +149,12 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.current_tag = None
         self.showing_on_demand = False
         self.was_corrected = False
+        self.lyric_cur_index = 0
+        self.lyric_seconds = 0
+        self.lyric_refresh_interval = 100
 
+        self.gtimer = GLib.timeout_add(self.lyric_refresh_interval, self.deal_time, self.lyric_refresh_interval)
+        
         # Search lyrics if already playing (this will be the case if user reactivates plugin during playback)
         if self.player.props.playing:
             self.search_lyrics(self.player, self.player.get_playing_entry())
@@ -168,7 +173,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         if self.psc_id is not None:
             self.player.disconnect(self.psc_id)
             self.player.disconnect(self.pec_id)
-
+        GLib.Source.remove(self.gtimer)
         self.appshell.cleanup()
 
         self.vbox = None
@@ -208,6 +213,8 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.position = None
         self.hbox = None
         self.back_button = None
+        self.lyric_cur_index = None
+        self.lyric_seconds = None
 
         self.shell = None
 
@@ -361,12 +368,14 @@ class lLyrics(GObject.Object, Peas.Activatable):
 
         last_item = item_unselect
 
-        for entry in LYRICS_SOURCES[:-1]:
-            last_item = self.add_radio_menu_item(self.radio_sources, entry, self.scan_selected_source_callback,
-                                                 last_item)
+        entries = self.settings["scanning-order"]
+        for entry in entries:
+            if entry in LYRICS_SOURCES:
+                last_item = self.add_radio_menu_item(self.radio_sources, entry, self.scan_selected_source_callback,
+                                                     last_item)
 
         self.radio_sources.append(Gtk.SeparatorMenuItem())
-        self.add_radio_menu_item(self.radio_sources, _("From cache file"), self.scan_selected_source_callback,
+        self.add_radio_menu_item(self.radio_sources, "From cache file", self.scan_selected_source_callback,
                                  last_item)
 
         self.radio_sources.show_all()
@@ -403,9 +412,9 @@ class lLyrics(GObject.Object, Peas.Activatable):
 
     def add_radio_menu_item(self, menu, label, callback, last):
         group = last.get_group()
-        item = Gtk.RadioMenuItem.new_with_label(group, label)
-        if label == _("From cache file"):
-            label = "From cache file"
+        item = Gtk.RadioMenuItem.new_with_label(group, _(label))
+        #if label == _("From cache file"):
+        #    label = "From cache file"
         item.connect("toggled", callback, label)
         menu.append(item)
 
@@ -422,7 +431,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
 
     def set_radio_menu_item_active(self, itemlabel):
         for item in self.radio_sources:
-            if item.get_label() == itemlabel:
+            if item.get_label() == itemlabel or item.get_label() == _(itemlabel):
                 item.set_active(True)
                 break
 
@@ -442,6 +451,8 @@ class lLyrics(GObject.Object, Peas.Activatable):
             self.visible = False
 
     def search_lyrics(self, player, entry):
+        self.lyric_seconds = 0.0
+        self.lyric_cur_index = 0
         # clear sync stuff
         if self.tags is not None:
             self.tags = None
@@ -451,7 +462,6 @@ class lLyrics(GObject.Object, Peas.Activatable):
 
         if entry is None:
             return
-
         # don't show lyrics for podcasts and radio
         if entry.get_entry_type().get_name() in ('iradio', 'podcast-post'):
             print("entry type: " + entry.get_entry_type().get_name())
@@ -854,8 +864,6 @@ class lLyrics(GObject.Object, Peas.Activatable):
         gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
         if self.current_source is None:
             self.set_radio_menu_item_active("SelectNothing")
-        elif self.current_source == "From cache file":
-            self.set_radio_menu_item_active(_("From cache file"))
         else:
             self.set_radio_menu_item_active(self.current_source)
 
@@ -876,27 +884,53 @@ class lLyrics(GObject.Object, Peas.Activatable):
     def elapsed_changed(self, player, seconds):
         if not self.tags or not self.edit_event.is_set():
             return
+        seconds = float(seconds)
+        self.lyric_seconds = seconds
+        try:
+            if self.tags[self.lyric_cur_index][0] > seconds:
+                self.lyric_cur_index = 0
+        except IndexError:
+            self.lyric_cur_index = 0
+        for i in range(self.lyric_cur_index, len(self.tags)):
+            try:
+                if self.tags[i][0] > seconds:
+                    self.lyric_cur_index = max([i - 1, 0])
+                    break
+            except:
+                self.lyric_cur_index = len(self.tags) - 1
+            if seconds == 0.0:
+                self.lyric_cur_index = 0
+            else:
+                self.lyric_cur_index = len(self.tags) - 1
+        try:
+            matching_tag = (self.tags[self.lyric_cur_index][0], self.tags[self.lyric_cur_index][1])
+        except:
+            matching_tag = None
+            self.lyric_cur_index = 0
+        if matching_tag is not None and self.current_tag != matching_tag:
+            #print("\n  DEBUG: play_seconds:" + str(seconds).replace('000000','') + "; lrc_seconds:" + str(matching_tag[0]) + "; lrc_index:" + str(self.lyric_cur_index) + "; " + matching_tag[1])
+            # remove old tag
+            start, end = self.textbuffer.get_bounds()
+            self.textbuffer.remove_tag(self.sync_tag, start, end)
 
-        matching_tag = None
-        for tag in self.tags:
-            time, _ = tag
-            if time > seconds:
-                break
-            matching_tag = tag
+            if self.lyric_cur_index == 0 and seconds < matching_tag[0]:
+                return
+            self.current_tag = matching_tag
+            # highlight next line
+            line = self.tags.index(self.current_tag) + 1
+            start = self.textbuffer.get_iter_at_line(line)
+            end = start.copy()
+            end.forward_to_line_end()
+            self.textbuffer.apply_tag(self.sync_tag, start, end)
+            self.textview.scroll_to_iter(start, 0.1, False, 0, 0)
 
-        if matching_tag is None or self.current_tag == matching_tag:
-            return
-
-        self.current_tag = matching_tag
-
-        # remove old tag
-        start, end = self.textbuffer.get_bounds()
-        self.textbuffer.remove_tag(self.sync_tag, start, end)
-
-        # highlight next line
-        line = self.tags.index(self.current_tag) + 1
-        start = self.textbuffer.get_iter_at_line(line)
-        end = start.copy()
-        end.forward_to_line_end()
-        self.textbuffer.apply_tag(self.sync_tag, start, end)
-        self.textview.scroll_to_iter(start, 0.1, False, 0, 0)
+    def deal_time(self, interval):
+        if self.player.props.playing:
+            if self.lyric_seconds == 0.0:
+                self.lyric_seconds += self.lyric_refresh_interval * 0.001
+            else:
+                self.lyric_seconds += self.lyric_refresh_interval * 0.001
+                self.elapsed_changed(None, self.lyric_seconds)
+        else:
+            self.lyric_seconds = 0.0
+        return True
