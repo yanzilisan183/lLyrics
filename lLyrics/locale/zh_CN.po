@@ -18,13 +18,17 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #. Create dictionary which assigns sources to their corresponding modules
-#: ../lLyrics.py:94 ../lLyrics.py:115 ../lLyrics.py:830
+#: ../lLyrics.py:94 ../lLyrics.py:118 ../lLyrics.py:830
 msgid "LocalSameFolder"
 msgstr "所在目录下同名.lrc"
 
-#: ../lLyrics.py:96 ../lLyrics.py:115 ../lLyrics.py:832
+#: ../lLyrics.py:96 ../lLyrics.py:119 ../lLyrics.py:832
 msgid "Kugou.com"
 msgstr "酷狗音乐"
+
+#: ../lLyrics.py:96 ../lLyrics.py:119 ../lLyrics.py:832
+msgid "music.163.com"
+msgstr "网易云音乐"
 
 #: ../lLyrics.py:256 ../lLyrics.py:275
 msgid "Lyrics"

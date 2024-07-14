@@ -30,6 +30,7 @@ from gi.repository import GLib
 
 import LocalSameFolderParser
 import KugouParser
+import NeteaseCloudMusicParser
 import ChartlyricsParser
 import LyricwikiParser
 import MetrolyricsParser
@@ -92,7 +93,7 @@ LYRICS_ARTIST_REPLACE = [("/", "-"), (" & ", " and ")]
 
 LYRICS_SOURCES = ["Lyricwiki.org", "Letras.terra.com.br", "Metrolyrics.com", "AZLyrics.com", "Lyricsmania.com",
                   "Vagalume.com.br", "Genius.com", "Darklyrics.com", "Chartlyrics.com", "LocalSameFolder",
-                  "Kugou.com"]
+                  "Kugou.com", "music.163.com"]
 
 
 class lLyrics(GObject.Object, Peas.Activatable):
@@ -116,7 +117,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
                           "Lyricsmania.com": LyricsmaniaParser, "Chartlyrics.com": ChartlyricsParser,
                           "Darklyrics.com": DarklyricsParser, "Genius.com": GeniusParser,
                           "Vagalume.com.br": VagalumeParser, "LocalSameFolder": LocalSameFolderParser,
-                          "Kugou.com": KugouParser,})
+                          "Kugou.com": KugouParser, "music.163.com": NeteaseCloudMusicParser})
         self.add_builtin_lyrics_sources()
 
         # Get the user preferences
@@ -837,11 +838,9 @@ class lLyrics(GObject.Object, Peas.Activatable):
         duration = self.duration
         print("source: " + source)
         self.current_source = source
-        if source == "LocalSameFolder":
-            parser = self.dict[source].Parser(artist, title, location)
-        elif source == "Kugou.com":
-            parser = self.dict[source].Parser(artist, title, duration)
-        else:
+        try:
+            parser = self.dict[source].Parser(artist, title, duration=duration, location=location)
+        except:
             parser = self.dict[source].Parser(artist, title)
 
         try:

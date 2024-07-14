@@ -24,7 +24,7 @@ import Util
 
 
 class Parser(object):
-    def __init__(self, artist, title, location):
+    def __init__(self, artist, title, *, duration=0, location=""):
         self.artist = artist
         self.title = title
         self.location = location
