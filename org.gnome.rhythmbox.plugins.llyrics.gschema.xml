@@ -5,13 +5,13 @@
 		<key name="active-sources" type="as">
 			<default>['LocalSameFolder', 'Kugou.com', 'music.163.com']</default>
 			<summary>List of lyrics sources to be scanned</summary>
-			<description>Possible values are: 'LocalSameFolder', 'Kugou.com', 'music.163.com', 'Lyricwiki.org', 'Letras.terra.com.br', 'Metrolyrics.com', 'AZLyrics.com', 'Lyricsmania.com', 'Vagalume.com.br', 'Darklyrics.com', 'Chartlyrics.com', 'Genius.com'</description>
+			<description>Possible values are: 'LocalSameFolder', 'Kugou.com', 'music.163.com', 'Kuwo.cn', 'Lyricwiki.org', 'Letras.terra.com.br', 'Metrolyrics.com', 'AZLyrics.com', 'Lyricsmania.com', 'Vagalume.com.br', 'Darklyrics.com', 'Chartlyrics.com', 'Genius.com'</description>
 		</key>
 		
 		<key name="scanning-order" type="as">
-			<default>['LocalSameFolder', 'Kugou.com', 'music.163.com', 'Lyricwiki.org', 'Letras.terra.com.br', 'Vagalume.com.br', 'Metrolyrics.com', 'AZLyrics.com', 'Lyricsmania.com', 'Genius.com', 'Darklyrics.com', 'Chartlyrics.com']</default>
+			<default>['LocalSameFolder', 'Kugou.com', 'music.163.com', 'Kuwo.cn', 'Lyricwiki.org', 'Letras.terra.com.br', 'Vagalume.com.br', 'Metrolyrics.com', 'AZLyrics.com', 'Lyricsmania.com', 'Genius.com', 'Darklyrics.com', 'Chartlyrics.com']</default>
 			<summary>Sources are scanned in this order</summary>
-			<description>Possible values are: 'LocalSameFolder', 'Kugou.com', 'music.163.com', 'Lyricwiki.org', 'Letras.terra.com.br', 'Metrolyrics.com', 'AZLyrics.com', 'Lyricsmania.com', 'Vagalume.com.br', 'Genius.com', 'Darklyrics.com', 'Chartlyrics.com'</description>
+			<description>Possible values are: 'LocalSameFolder', 'Kugou.com', 'music.163.com', 'Kuwo.cn', 'Lyricwiki.org', 'Letras.terra.com.br', 'Metrolyrics.com', 'AZLyrics.com', 'Lyricsmania.com', 'Vagalume.com.br', 'Genius.com', 'Darklyrics.com', 'Chartlyrics.com'</description>
 		</key>
 		
 		<key name="show-first" type="b">

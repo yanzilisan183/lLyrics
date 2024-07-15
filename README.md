@@ -18,6 +18,7 @@ lLyrics 是 [Rhythmbox](http://projects.gnome.org/rhythmbox/) 的插件，在侧
   - 所在目录下同名.lrc(LocalSameFolder)
   - 酷狗音乐(Kugou.com)
   - 网易云音乐(music.163.com)
+  - 酷我音乐(Kuwo.cn)
   - Lyricwiki.org
   - Letras.terra.com.br
   - Vagalume.com.br
