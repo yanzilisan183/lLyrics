@@ -32,15 +32,12 @@ import LocalSameFolderParser
 import KugouParser
 import NeteaseCloudMusicParser
 import KuwoParser
-import ChartlyricsParser
-import LyricwikiParser
-import MetrolyricsParser
 import LetrasTerraParser
 import AZLyricsParser
 import LyricsmaniaParser
-import DarklyricsParser
-import GeniusParser
 import VagalumeParser
+import DarklyricsParser
+import ChartlyricsParser
 import Util
 from lLyrics_rb3compat import ActionGroup
 from lLyrics_rb3compat import ApplicationShell
@@ -92,9 +89,8 @@ LYRICS_TITLE_STRIP = ["\(live[^\)]*\)", "\(acoustic[^\)]*\)", "\([^\)]*mix\)", "
 LYRICS_TITLE_REPLACE = [("/", "-"), (" & ", " and ")]
 LYRICS_ARTIST_REPLACE = [("/", "-"), (" & ", " and ")]
 
-LYRICS_SOURCES = ["Lyricwiki.org", "Letras.terra.com.br", "Metrolyrics.com", "AZLyrics.com", "Lyricsmania.com",
-                  "Vagalume.com.br", "Genius.com", "Darklyrics.com", "Chartlyrics.com", "LocalSameFolder",
-                  "Kugou.com", "music.163.com", "Kuwo.cn"]
+LYRICS_SOURCES = ["Letras.terra.com.br", "AZLyrics.com", "Lyricsmania.com", "Vagalume.com.br", "Darklyrics.com",
+                  "Chartlyrics.com", "LocalSameFolder", "Kugou.com", "music.163.com", "Kuwo.cn"]
 
 
 class lLyrics(GObject.Object, Peas.Activatable):
@@ -113,12 +109,11 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.appshell = ApplicationShell(self.shell)
 
         # Create dictionary which assigns sources to their corresponding modules
-        self.dict = dict({"Lyricwiki.org": LyricwikiParser, "Letras.terra.com.br": LetrasTerraParser,
-                          "Metrolyrics.com": MetrolyricsParser, "AZLyrics.com": AZLyricsParser,
-                          "Lyricsmania.com": LyricsmaniaParser, "Chartlyrics.com": ChartlyricsParser,
-                          "Darklyrics.com": DarklyricsParser, "Genius.com": GeniusParser,
-                          "Vagalume.com.br": VagalumeParser, "LocalSameFolder": LocalSameFolderParser,
-                          "Kugou.com": KugouParser, "music.163.com": NeteaseCloudMusicParser, "Kuwo.cn": KuwoParser})
+        self.dict = dict({"Letras.terra.com.br": LetrasTerraParser, "AZLyrics.com": AZLyricsParser,
+                          "Lyricsmania.com": LyricsmaniaParser, "Vagalume.com.br": VagalumeParser,
+                          "Darklyrics.com": DarklyricsParser, "Chartlyrics.com": ChartlyricsParser,
+                          "LocalSameFolder": LocalSameFolderParser, "Kugou.com": KugouParser,
+                          "music.163.com": NeteaseCloudMusicParser, "Kuwo.cn": KuwoParser})
         self.add_builtin_lyrics_sources()
 
         # Get the user preferences

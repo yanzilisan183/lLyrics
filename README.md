@@ -15,20 +15,20 @@ lLyrics 是 [Rhythmbox](http://projects.gnome.org/rhythmbox/) 的插件，在侧
 歌词来源
 ---------------
 
-  - 所在目录下同名.lrc(LocalSameFolder)
-  - 酷狗音乐(Kugou.com)
-  - 网易云音乐(music.163.com)
-  - 酷我音乐(Kuwo.cn)
-  - Lyricwiki.org
+  - 所在目录下同名.lrc(LocalSameFolder)（新增）
+  - 酷狗音乐(Kugou.com)（新增）
+  - 网易云音乐(music.163.com)（新增）
+  - 酷我音乐(Kuwo.cn)（新增）
   - Letras.terra.com.br
-  - Vagalume.com.br
-  - Metrolyrics.com
   - AZLyrics.com
   - Lyricsmania.com
-  - Genius.com
+  - Vagalume.com.br
   - Darklyrics.com
   - Chartlyrics.com
-
+  - Lyricwiki.org（移除）
+  - Metrolyrics.com（移除）
+  - Genius.com（移除）
+  
 也可以从内置的 Rhythmbox 歌词插件中检索歌词，但不建议这样做，因为它有一些错误，可能会导致不稳定。
 
 
@@ -91,7 +91,7 @@ Archlinux 用户可以通过 [此 AUR 包](https://aur.archlinux.org/packages/rh
   - 通过 Last.fm API更正艺术家/标题标签以获得更好的结果
   - 外观可定制，以适应您的需求或可用的屏幕空间
   - 对同步歌词的基本支持
-  - 同步歌词的高亮时间精度提升到1/10秒**（此分支新增）**
+  - 同步歌词的高亮时间精度提升到1/10秒（此分支新增）
   - 更多……
 
 

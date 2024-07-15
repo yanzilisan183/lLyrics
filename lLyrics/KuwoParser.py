@@ -34,7 +34,9 @@ class Parser(object):
         clean_artist = Util.remove_punctuation(self.artist)
         clean_title = Util.remove_punctuation(self.title)
         # 查找曲目
-        t_url = "https://www.kuwo.cn/search/searchMusicBykeyWord?vipver=1&client=kt&ft=music&cluster=0&strategy=2012&encoding=utf8&rformat=json&mobi=1&issubtitle=1&show_copyright_off=1&pn=0&rn=30&all=" + clean_title.replace(' ','+') + "+" + clean_artist.replace(' ','+')
+        t_url = "https://www.kuwo.cn/search/searchMusicBykeyWord?vipver=1&client=kt&ft=music&cluster=0&" +\
+                "strategy=2012&encoding=utf8&rformat=json&mobi=1&issubtitle=1&show_copyright_off=1&pn=0&rn=30&" +\
+                "all=" + clean_title.replace(' ','+') + "+" + clean_artist.replace(' ','+')
         t_header = {
                      "Host": "www.kuwo.cn",
                      "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0",
@@ -42,7 +44,6 @@ class Parser(object):
                      "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
                      "DNT": "1",
                      "Connection": "keep-alive",
-                     "Cookie": "Hm_Iuvt_cdb524f42f23cer9b268564v7y735ewrq2324=FhCQyBAM2mKByFjrwjZrcKdCmrW8w775",
                      "Referer": "https://www.kuwo.cn/search/list",
                      "Sec-Fetch-Dest": "empty",
                      "Sec-Fetch-Mode": "cors",
@@ -89,7 +90,8 @@ class Parser(object):
                 # 发现交叉配配,设置标记
                 t_info_matched = "yes"
                 t_swap_matched = "yes"
-            if t_title != '' and m_title != '' and (t_title in m_title or m_title in t_title) and t_artist_sorted == m_artist_sorted and t_diff < 1:
+            if t_title != '' and m_title != '' and (t_title in m_title or m_title in t_title)\
+               and t_artist_sorted == m_artist_sorted and t_diff < 1:
                 # 标题有后缀,在艺术家(排序后)及时长完全一致情况下认为是匹配的
                 t_info_matched = "yes"
                 t_swap_matched = "yes"
@@ -99,12 +101,12 @@ class Parser(object):
                 t_url = "http://m.kuwo.cn/newh5/singles/songinfoandlrc?musicId=" + t_music_id + "&httpsStatus=1"
                 t_header = {
                              "Host": "m.kuwo.cn",
-                             "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:128.0) Gecko/20100101 Firefox/128.0",
+                             "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:128.0) Gecko/20100101 " +\
+                                           "Firefox/128.0",
                              "Accept": "application/json, text/plain, */*",
                              "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
                              "DNT": "1",
                              "Connection": "keep-alive",
-                             #"Cookie": "gid=615628e0-25c4-4dbd-8011-fcbf18248128; reqid=cbfe4211X007cX4529Xaa05Xccccb503e76b; gtoken=N4DkIvkYyi9q",
                              "Upgrade-Insecure-Requests": "1",
                              "Pragma": "no-cache",
                              "Cache-Control": "max-age=0"
@@ -126,7 +128,8 @@ class Parser(object):
                 elif resp["data"] and resp["data"]["lrclist"] and len(resp["data"]["lrclist"]) > 0:
                     lyrics = ""
                     for lyricline in resp["data"]["lrclist"]:
-                        lyrics += "[" + str(self.timenum2timestr(lyricline["time"])) + "]" + str(lyricline["lineLyric"]) + "\n"
+                        lyrics += "[" + str(self.timenum2timestr(lyricline["time"])) + "]" +\
+                                  str(lyricline["lineLyric"]) + "\n"
                     self.lyrics = lyrics
                     return self.lyrics
         return self.lyrics
@@ -161,5 +164,6 @@ class Parser(object):
         elif int(tarr[0]) >= 60 and int(tarr[0]) < 3600:
             return ("00" + str(int(int(tarr[0]) / 60)))[-2:] + ":" + ("00" + str(int(int(tarr[0]) % 60)))[-2:] + tarr[1]
         elif int(tarr[0]) >= 3600:
-            return str(int(int(tarr[0]) / 3600)) + ":" + ("00" + str(int((int(tarr[0]) % 3600) / 60)))[-2:] + ":" + ("00" + str(int((int(tarr[0]) % 3600) % 60)))[-2:] + tarr[1]
+            return str(int(int(tarr[0]) / 3600)) + ":" + ("00" + str(int((int(tarr[0]) % 3600) / 60)))[-2:] + ":" +\
+                   ("00" + str(int((int(tarr[0]) % 3600) % 60)))[-2:] + tarr[1]
 
