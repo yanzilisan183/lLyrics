@@ -29,6 +29,7 @@ from gi.repository import GdkPixbuf
 from gi.repository import GLib
 
 import LocalSameFolderParser
+import MediaID3v2Parser
 import KugouParser
 import NeteaseCloudMusicParser
 import KuwoParser
@@ -89,8 +90,8 @@ LYRICS_TITLE_STRIP = ["\(live[^\)]*\)", "\(acoustic[^\)]*\)", "\([^\)]*mix\)", "
 LYRICS_TITLE_REPLACE = [("/", "-"), (" & ", " and ")]
 LYRICS_ARTIST_REPLACE = [("/", "-"), (" & ", " and ")]
 
-LYRICS_SOURCES = ["Letras.terra.com.br", "AZLyrics.com", "Lyricsmania.com", "Vagalume.com.br", "Darklyrics.com",
-                  "Chartlyrics.com", "LocalSameFolder", "Kugou.com", "music.163.com", "Kuwo.cn"]
+LYRICS_SOURCES = ["LocalSameFolder", "Media Lyrics Tags", "Kugou.com", "music.163.com", "Kuwo.cn", "Letras.terra.com.br",
+                  "AZLyrics.com", "Lyricsmania.com", "Vagalume.com.br", "Chartlyrics.com", "Darklyrics.com"]
 
 
 class lLyrics(GObject.Object, Peas.Activatable):
@@ -109,11 +110,11 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.appshell = ApplicationShell(self.shell)
 
         # Create dictionary which assigns sources to their corresponding modules
-        self.dict = dict({"Letras.terra.com.br": LetrasTerraParser, "AZLyrics.com": AZLyricsParser,
+        self.dict = dict({"LocalSameFolder": LocalSameFolderParser, "Media Lyrics Tags": MediaID3v2Parser,
+                          "Kugou.com": KugouParser, "music.163.com": NeteaseCloudMusicParser, "Kuwo.cn": KuwoParser,
+                          "Letras.terra.com.br": LetrasTerraParser, "AZLyrics.com": AZLyricsParser,
                           "Lyricsmania.com": LyricsmaniaParser, "Vagalume.com.br": VagalumeParser,
-                          "Darklyrics.com": DarklyricsParser, "Chartlyrics.com": ChartlyricsParser,
-                          "LocalSameFolder": LocalSameFolderParser, "Kugou.com": KugouParser,
-                          "music.163.com": NeteaseCloudMusicParser, "Kuwo.cn": KuwoParser})
+                          "Darklyrics.com": DarklyricsParser, "Chartlyrics.com": ChartlyricsParser})
         self.add_builtin_lyrics_sources()
 
         # Get the user preferences
@@ -410,8 +411,6 @@ class lLyrics(GObject.Object, Peas.Activatable):
     def add_radio_menu_item(self, menu, label, callback, last):
         group = last.get_group()
         item = Gtk.RadioMenuItem.new_with_label(group, _(label))
-        #if label == _("From cache file"):
-        #    label = "From cache file"
         item.connect("toggled", callback, label)
         menu.append(item)
 

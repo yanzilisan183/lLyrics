@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-12 16:18+0800\n"
+"POT-Creation-Date: 2024-07-16 20:02+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,105 +17,92 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Create dictionary which assigns sources to their corresponding modules
-#: ../lLyrics.py:94 ../lLyrics.py:115 ../lLyrics.py:831
-msgid "LocalSameFolder"
-msgstr ""
-
-#: ../lLyrics.py:96 ../lLyrics.py:115 ../lLyrics.py:833
-msgid "Kugou.com"
-msgstr ""
-
-#: ../lLyrics.py:256 ../lLyrics.py:275
+#: ../lLyrics.py:260 ../lLyrics.py:279
 msgid "Lyrics"
 msgstr ""
 
-#: ../lLyrics.py:259
+#: ../lLyrics.py:263
 msgid "Display lyrics for the current playing song"
 msgstr ""
 
-#: ../lLyrics.py:263
+#: ../lLyrics.py:267
 msgid "Show lyrics"
 msgstr ""
 
-#: ../lLyrics.py:264
+#: ../lLyrics.py:268
 msgid "Search and display lyrics for this song"
 msgstr ""
 
 #. create save and cancel buttons for edited lyrics
-#: ../lLyrics.py:327
+#: ../lLyrics.py:331
 msgid "Save"
 msgstr ""
 
-#: ../lLyrics.py:329
+#: ../lLyrics.py:333
 msgid "Cancel"
 msgstr ""
 
 #. button for closing on demand lyrics
-#: ../lLyrics.py:336
+#: ../lLyrics.py:340
 msgid "Back to playing song"
 msgstr ""
 
-#: ../lLyrics.py:370 ../lLyrics.py:408 ../lLyrics.py:859
-msgid "From cache file"
-msgstr ""
-
-#: ../lLyrics.py:375 ../Config.py:302
+#: ../lLyrics.py:381 ../Config.py:305
 msgid "Sources"
 msgstr ""
 
-#: ../lLyrics.py:379
+#: ../lLyrics.py:385
 msgid "Scan next source"
 msgstr ""
 
-#: ../lLyrics.py:380
+#: ../lLyrics.py:386
 msgid "Scan all sources"
 msgstr ""
 
-#: ../lLyrics.py:382
+#: ../lLyrics.py:388
 msgid "Search online"
 msgstr ""
 
-#: ../lLyrics.py:384
+#: ../lLyrics.py:390
 msgid "Mark as instrumental"
 msgstr ""
 
-#: ../lLyrics.py:386
+#: ../lLyrics.py:392
 msgid "Clear lyrics"
 msgstr ""
 
-#: ../lLyrics.py:387
+#: ../lLyrics.py:393
 msgid "Edit lyrics"
 msgstr ""
 
-#: ../lLyrics.py:391
+#: ../lLyrics.py:397
 msgid "Preferences"
 msgstr ""
 
 #. Allow changing the default search engine through internationalization
-#: ../lLyrics.py:559
+#: ../lLyrics.py:564
 #, python-format
 msgid "http://www.google.com/search?q=%s+%s+lyrics"
 msgstr ""
 
-#: ../lLyrics.py:563
+#: ../lLyrics.py:568
 msgid "Instrumental"
 msgstr ""
 
-#: ../lLyrics.py:612
+#: ../lLyrics.py:617
 msgid "lLyrics Preferences"
 msgstr ""
 
-#: ../lLyrics.py:670 ../lLyrics.py:694 ../lLyrics.py:725 ../lLyrics.py:750
+#: ../lLyrics.py:675 ../lLyrics.py:699 ../lLyrics.py:730 ../lLyrics.py:755
 msgid "searching lyrics..."
 msgstr ""
 
-#: ../lLyrics.py:848
+#: ../lLyrics.py:851
 #, python-format
 msgid "(lyrics from %s)"
 msgstr ""
 
-#: ../lLyrics.py:865
+#: ../lLyrics.py:866
 msgid "No lyrics found"
 msgstr ""
 
@@ -155,24 +142,24 @@ msgstr ""
 msgid "Sources:"
 msgstr ""
 
-#: ../Config.py:267
+#: ../Config.py:270
 msgid "Hide sidebar label"
 msgstr ""
 
-#: ../Config.py:281
+#: ../Config.py:284
 msgid "Show lyrics in left sidebar instead of right one"
 msgstr ""
 
-#: ../Config.py:284
+#: ../Config.py:287
 msgid ""
 "You have to disable and re-enable this plugin or restart Rhythmbox to apply "
 "changes here"
 msgstr ""
 
-#: ../Config.py:301
+#: ../Config.py:304
 msgid "General"
 msgstr ""
 
-#: ../Config.py:303
+#: ../Config.py:306
 msgid "Appearance"
 msgstr ""

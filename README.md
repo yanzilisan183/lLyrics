@@ -16,6 +16,7 @@ lLyrics 是 [Rhythmbox](http://projects.gnome.org/rhythmbox/) 的插件，在侧
 ---------------
 
   - 所在目录下同名.lrc(LocalSameFolder)（新增）
+  - 媒体文件内嵌歌词标签(Media Lyrics Tags)（新增）
   - 酷狗音乐(Kugou.com)（新增）
   - 网易云音乐(music.163.com)（新增）
   - 酷我音乐(Kuwo.cn)（新增）
@@ -25,9 +26,9 @@ lLyrics 是 [Rhythmbox](http://projects.gnome.org/rhythmbox/) 的插件，在侧
   - Vagalume.com.br
   - Darklyrics.com
   - Chartlyrics.com
-  - Lyricwiki.org（移除）
-  - Metrolyrics.com（移除）
-  - Genius.com（移除）
+  - ~~Lyricwiki.org（移除）~~
+  - ~~Metrolyrics.com（移除）~~
+  - ~~Genius.com（移除）~~
   
 也可以从内置的 Rhythmbox 歌词插件中检索歌词，但不建议这样做，因为它有一些错误，可能会导致不稳定。
 
@@ -43,7 +44,10 @@ lLyrics 是 [Rhythmbox](http://projects.gnome.org/rhythmbox/) 的插件，在侧
 
 #### 依赖项 ####
 
-lLyrics 可以在不需要任何额外包的情况下运行，但建议安装 python 模块 **"chardet"**，以便更好地处理不同的编码。
+lLyrics 可以在不需要任何额外包的情况下运行，但建议:
+  - 安装 python 模块 **"chardet"**，以便更好地处理不同的编码。
+  - 安装 python 模块 **"mutagen"**，以便可以从本地媒体文件的歌词标签读取歌词。
+
 
 
 

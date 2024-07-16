@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lLyrics/yanzilisan183\n"
 "Report-Msgid-Bugs-To: https://github.com/yanzilisan183/lLyrics/issues\n"
-"POT-Creation-Date: 2024-07-12 16:02+0800\n"
-"PO-Revision-Date: 2024-07-12 16:04+0800\n"
+"POT-Creation-Date: 2024-07-16 20:02+0800\n"
+"PO-Revision-Date: 2024-07-16 20:07+0800\n"
 "Last-Translator:  Li Yunfie <yanzilisan183@sina.com>\n"
 "Language-Team: Chinese (simplified) <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -21,6 +21,10 @@ msgstr ""
 #: ../lLyrics.py:96 ../lLyrics.py:120
 msgid "LocalSameFolder"
 msgstr "所在目录下同名.lrc"
+
+#: ../lLyrics.py:96 ../lLyrics.py:120
+msgid "Media Lyrics Tags"
+msgstr "媒体文件内嵌歌词标签"
 
 #: ../lLyrics.py:97 ../lLyrics.py:121
 msgid "Kugou.com"
@@ -34,96 +38,92 @@ msgstr "网易云音乐"
 msgid "Kuwo.cn"
 msgstr "酷我音乐"
 
-#: ../lLyrics.py:256 ../lLyrics.py:275
+#: ../lLyrics.py:260 ../lLyrics.py:279
 msgid "Lyrics"
 msgstr "歌词"
 
-#: ../lLyrics.py:259
+#: ../lLyrics.py:263
 msgid "Display lyrics for the current playing song"
 msgstr "显示当前播放歌曲的歌词"
 
-#: ../lLyrics.py:263
+#: ../lLyrics.py:267
 msgid "Show lyrics"
 msgstr "显示歌词"
 
-#: ../lLyrics.py:264
+#: ../lLyrics.py:268
 msgid "Search and display lyrics for this song"
 msgstr "搜索并显示此歌曲的歌词"
 
 #. create save and cancel buttons for edited lyrics
-#: ../lLyrics.py:327
+#: ../lLyrics.py:331
 msgid "Save"
 msgstr "保存"
 
-#: ../lLyrics.py:329
+#: ../lLyrics.py:333
 msgid "Cancel"
 msgstr "取消"
 
 #. button for closing on demand lyrics
-#: ../lLyrics.py:336
+#: ../lLyrics.py:340
 msgid "Back to playing song"
 msgstr "返回到播放中的歌曲"
-
-#: ../lLyrics.py:370 ../lLyrics.py:408 ../lLyrics.py:858
-msgid "From cache file"
-msgstr "来自缓存文件"
 
 #: ../lLyrics.py:375 ../Config.py:302
 msgid "Sources"
 msgstr "来源"
 
-#: ../lLyrics.py:379
+#: ../lLyrics.py:385
 msgid "Scan next source"
 msgstr "扫描下一个源"
 
-#: ../lLyrics.py:380
+#: ../lLyrics.py:386
 msgid "Scan all sources"
 msgstr "扫描所有源"
 
-#: ../lLyrics.py:382
+#: ../lLyrics.py:388
 msgid "Search online"
 msgstr "在线搜索"
 
-#: ../lLyrics.py:384
+#: ../lLyrics.py:390
 msgid "Mark as instrumental"
 msgstr "标记为纯音乐"
 
-#: ../lLyrics.py:386
+#: ../lLyrics.py:392
 msgid "Clear lyrics"
 msgstr "清除歌词"
 
-#: ../lLyrics.py:387
+#: ../lLyrics.py:393
 msgid "Edit lyrics"
 msgstr "编辑歌词"
 
-#: ../lLyrics.py:391
+#: ../lLyrics.py:397
 msgid "Preferences"
 msgstr "首选项"
 
 #. Allow changing the default search engine through internationalization
-#: ../lLyrics.py:559
+#: ../lLyrics.py:564
 #, python-format
 msgid "http://www.google.com/search?q=%s+%s+lyrics"
 msgstr "https://www.baidu.com/baidu?ie=utf-8&wd=%s+%s+歌词"
 
-#: ../lLyrics.py:563
+#: ../lLyrics.py:568
 msgid "Instrumental"
 msgstr "纯音乐"
 
-#: ../lLyrics.py:612
+#: ../lLyrics.py:617
 msgid "lLyrics Preferences"
 msgstr "lLyrics首选项"
 
-#: ../lLyrics.py:670 ../lLyrics.py:694 ../lLyrics.py:725 ../lLyrics.py:750
+#: ../lLyrics.py:675 ../lLyrics.py:699 ../lLyrics.py:730 ../lLyrics.py:755
 msgid "searching lyrics..."
 msgstr "正在搜索歌词……"
 
-#: ../lLyrics.py:848
+#: ../lLyrics.py:851
 #, python-format
 msgid "(lyrics from %s)"
 msgstr "（歌词来自于 %s）"
 
-#: ../lLyrics.py:865
+#: ../lLyrics.py:866
 msgid "No lyrics found"
 msgstr "找不到歌词"
 
@@ -163,24 +163,24 @@ msgstr "选项关闭时，仅包含特定字符串的括号（例如“remix”�
 msgid "Sources:"
 msgstr "来源："
 
-#: ../Config.py:267
+#: ../Config.py:270
 msgid "Hide sidebar label"
 msgstr "隐藏侧边栏标签"
 
-#: ../Config.py:281
+#: ../Config.py:284
 msgid "Show lyrics in left sidebar instead of right one"
 msgstr "在左侧边栏而不是右侧边栏中显示歌词"
 
-#: ../Config.py:284
+#: ../Config.py:287
 msgid ""
 "You have to disable and re-enable this plugin or restart Rhythmbox to apply "
 "changes here"
 msgstr "您必须禁用并重新启用此插件，或者重新启动Rhythmbox才能使此选项更改生效"
 
-#: ../Config.py:301
+#: ../Config.py:304
 msgid "General"
 msgstr "通用"
 
-#: ../Config.py:303
+#: ../Config.py:306
 msgid "Appearance"
 msgstr "外观"

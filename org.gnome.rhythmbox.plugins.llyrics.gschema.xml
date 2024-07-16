@@ -3,15 +3,15 @@
 	<schema id="org.gnome.rhythmbox.plugins.llyrics" path="/org/gnome/rhythmbox/plugins/llyrics/">
 		
 		<key name="active-sources" type="as">
-			<default>['LocalSameFolder', 'Kugou.com', 'music.163.com']</default>
+			<default>['LocalSameFolder', 'Media Lyrics Tags', 'Kugou.com', 'music.163.com']</default>
 			<summary>List of lyrics sources to be scanned</summary>
-			<description>Possible values are: 'LocalSameFolder', 'Kugou.com', 'music.163.com', 'Kuwo.cn', 'Letras.terra.com.br', 'AZLyrics.com', 'Lyricsmania.com', 'Vagalume.com.br', 'Chartlyrics.com', 'Darklyrics.com'</description>
+			<description>Possible values are: 'LocalSameFolder', 'Media Lyrics Tags', 'Kugou.com', 'music.163.com', 'Kuwo.cn', 'Letras.terra.com.br', 'AZLyrics.com', 'Lyricsmania.com', 'Vagalume.com.br', 'Chartlyrics.com', 'Darklyrics.com'</description>
 		</key>
 		
 		<key name="scanning-order" type="as">
-			<default>['LocalSameFolder', 'Kugou.com', 'music.163.com', 'Kuwo.cn', 'Letras.terra.com.br', 'Vagalume.com.br', 'AZLyrics.com', 'Lyricsmania.com', 'Chartlyrics.com', 'Darklyrics.com']</default>
+			<default>['LocalSameFolder', 'Media Lyrics Tags', 'Kugou.com', 'music.163.com', 'Kuwo.cn', 'Letras.terra.com.br', 'Vagalume.com.br', 'AZLyrics.com', 'Lyricsmania.com', 'Chartlyrics.com', 'Darklyrics.com']</default>
 			<summary>Sources are scanned in this order</summary>
-			<description>Possible values are: 'LocalSameFolder', 'Kugou.com', 'music.163.com', 'Kuwo.cn', 'Letras.terra.com.br', 'AZLyrics.com', 'Lyricsmania.com', 'Vagalume.com.br', 'Chartlyrics.com', 'Darklyrics.com'</description>
+			<description>Possible values are: 'LocalSameFolder', 'Media Lyrics Tags', 'Kugou.com', 'music.163.com', 'Kuwo.cn', 'Letras.terra.com.br', 'AZLyrics.com', 'Lyricsmania.com', 'Vagalume.com.br', 'Chartlyrics.com', 'Darklyrics.com'</description>
 		</key>
 		
 		<key name="show-first" type="b">
