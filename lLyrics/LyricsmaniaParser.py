@@ -1,4 +1,4 @@
-# Parser for lyricsmania.com
+# Parser for lyricsmania.com (fix at 13:42 2024-07-16 by LI YunFei <yanzilisan183@sina.com>)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -52,11 +52,17 @@ class Parser(object):
 
     def get_lyrics(self, resp):
         # cut HTML source to relevant part
-        start = resp.find("</strong>")
-        if start == -1:
+        start_keywords = ["<div class=\"lyrics-body\">\n", "class=\"play-video\"></a>\n</div>"]
+        finded_keyword = False
+        for keyword in start_keywords:
+            start = resp.find(keyword)
+            if start > -1:
+                finded_keyword = True
+                resp = resp[(start + len(keyword)):]
+        if finded_keyword == False:
             print("lyrics start not found")
             return ""
-        resp = resp[(start + 9):]
+        
         end = resp.find("</div>")
         if end == -1:
             print("lyrics end not found ")
@@ -66,10 +72,12 @@ class Parser(object):
         # replace unwanted parts
         resp = resp.replace("\n", "")
         resp = resp.replace("<br>", "\n")
+        resp = resp.replace("<br/>", "\n")
         resp = resp.replace("<br />", "\n")
         resp = resp.replace("\n\n", "\n")
         resp = resp.replace("<div class=\"p402_premium\">", "")
         resp = resp.replace("<div class=\"fb-quotable\">", "")
+        print(resp)
 
         resp = "\n".join(line.strip() for line in resp.split("\n"))
 

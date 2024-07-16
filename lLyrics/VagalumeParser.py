@@ -1,4 +1,4 @@
-# Parser for Vagalume.com.br
+# Parser for Vagalume.com.br (fix at 11:20 2024-07-16 by LI YunFei <yanzilisan183@sina.com>)
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -61,7 +61,6 @@ class Parser():
             return ""
 
         resp = Util.bytes_to_string(resp)
-
         self.lyrics = self.get_lyrics(resp)
         self.lyrics = string.capwords(self.lyrics, "\n").strip()
 
@@ -69,11 +68,12 @@ class Parser():
 
     def get_lyrics(self, resp):
         # cut HTML source to relevant part
-        start = resp.find("<div itemprop=description>")
+        start_keyword = "<div id=lyrics>"
+        start = resp.find(start_keyword)
         if start == -1:
             print("lyrics start not found")
             return ""
-        resp = resp[(start + 26):]
+        resp = resp[(start + len(start_keyword)):]
         end = resp.find("</div>")
         if end == -1:
             print("lyrics end not found ")
@@ -81,7 +81,7 @@ class Parser():
         resp = resp[:(end)]
 
         # replace unwanted parts
-        resp = resp.replace("<br/>", "\n")
+        resp = resp.replace("<br />", "\n").replace("<br/>", "\n").replace("<br>", "\n").replace("\n\n", "\n")
 
         return resp
 
