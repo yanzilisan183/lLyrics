@@ -16,10 +16,6 @@
 import urllib.request, urllib.error, urllib.parse
 import re
 import string
-import pprint   # by san
-
-from html.parser import HTMLParser
-
 import Util
 
 

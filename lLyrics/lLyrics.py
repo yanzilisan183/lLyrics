@@ -17,6 +17,7 @@ import threading
 import webbrowser
 import sys
 import unicodedata
+import urllib.parse
 
 from threading import Thread
 from gi.repository import GObject
@@ -147,6 +148,8 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.current_tag = None
         self.showing_on_demand = False
         self.was_corrected = False
+        self.path_before_edit = ""
+        self.lyrics = ""
         self.lyric_cur_index = 0
         self.lyric_seconds = 0
         self.lyric_refresh_interval = 100
@@ -202,7 +205,6 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.lyrics_before_edit = None
         self.edit_event = None
         self.path_before_edit = None
-        self.cache = None
         self.lyrics_folder = None
         self.ignore_brackets = None
         self.left_sidebar = None
@@ -213,6 +215,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.back_button = None
         self.lyric_cur_index = None
         self.lyric_seconds = None
+        self.lyrics = None
 
         self.shell = None
 
@@ -528,7 +531,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         artist_folder = os.path.join(self.lyrics_folder, artist[:128])
         if self.settings["cache-lyrics"]:
             if not os.path.exists(artist_folder):
-                os.mkdir(artist_folder)
+                os.makedirs(artist_folder)
 
         return os.path.join(artist_folder, title[:128] + '.lyric')
 
@@ -565,17 +568,17 @@ class lLyrics(GObject.Object, Peas.Activatable):
 
     def instrumental_action_callback(self, action):
         gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
-        lyrics = "-- " + _("Instrumental") + " --"
-        self.write_lyrics_to_cache(self.path, lyrics)
+        self.lyrics = "-- " + _("Instrumental") + " --"
+        self.write_lyrics_to_file(self.path, self.lyrics)
         self.current_source = None
-        Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, self.show_lyrics, lyrics)
+        Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, self.show_lyrics, self.lyrics)
 
     def save_to_cache_action_callback(self, action):
         start, end = self.textbuffer.get_bounds()
         start.forward_lines(1)
-        lyrics = self.textbuffer.get_text(start, end, False)
+        self.lyrics = self.textbuffer.get_text(start, end, False)
 
-        self.write_lyrics_to_cache(self.path, lyrics)
+        self.write_lyrics_to_file(self.path, self.lyrics)
 
     def clear_action_callback(self, action):
         self.textbuffer.set_text("")
@@ -597,14 +600,20 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.textbuffer.remove_tag(self.sync_tag, start, end)
         # Conserve cache path in order to be able to correctly save edited lyrics although
         # the playing song might have changed during editing.
+        if self.current_source == "LocalSameFolder" and self.location.find("file:///") == 0:
+            self.path = str(urllib.parse.unquote(re.sub(r"\.[^\.]*$", ".lrc", self.location)))[7:]
+            self.lyrics = self.lyrics.replace("\n\n" + (_("(lyrics from %s)") % _(self.current_source)), '')
         self.path_before_edit = self.path
-
         self.set_menu_sensitive(False)
+        self.back_button.set_sensitive(False)
 
         # Enable editing and set cursor
         self.textview.set_cursor_visible(True)
         self.textview.set_editable(True)
-        cursor = self.textbuffer.get_iter_at_line(1)
+        
+        self.textbuffer.set_text(self.lyrics)
+        
+        cursor = self.textbuffer.get_iter_at_line(0)
         self.textbuffer.place_cursor(cursor)
         self.textview.grab_focus()
 
@@ -628,6 +637,8 @@ class lLyrics(GObject.Object, Peas.Activatable):
         dialog.hide()
 
     def context_action_callback(self, action, param=None, data=None):
+        if self.back_button.get_sensitive() == False:
+            return
         page = self.shell.props.selected_page
         if not hasattr(page, "get_entry_view"):
             return
@@ -662,20 +673,29 @@ class lLyrics(GObject.Object, Peas.Activatable):
 
         # get lyrics without artist-title header
         start, end = self.textbuffer.get_bounds()
-        start.forward_lines(1)
+        #start.forward_lines(1)
         lyrics = self.textbuffer.get_text(start, end, False)
 
         # save edited lyrics to cache file and audio tag
-        self.write_lyrics_to_cache(self.path_before_edit, lyrics)
+        self.write_lyrics_to_file(self.path_before_edit, lyrics.replace("\r\n","\n").replace("\r","\n"))
 
         # If playing song changed, set "searching lyrics..." (might be overwritten
         # immediately, if thread for the new song already found lyrics)
         if self.path != self.path_before_edit:
             gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
             self.textbuffer.set_text(_("searching lyrics..."))
+        elif self.current_source == "LocalSameFolder":
+            # Reloading from Local Same Folder.
+            newthread = Thread(target=self._scan_source_thread, args=(self.current_source, self.clean_artist, self.clean_title))
+            newthread.start()
+        else:
+            # Reloading from cache file.
+            newthread = Thread(target=self._scan_source_thread, args=("From cache file", self.clean_artist, self.clean_title))
+            newthread.start()
 
         self.set_menu_sensitive(True)
-
+        self.back_button.set_sensitive(True)
+        
         # Set event flag to indicate end of editing and wake all threads 
         # waiting to display new lyrics.
         self.edit_event.set()
@@ -699,7 +719,8 @@ class lLyrics(GObject.Object, Peas.Activatable):
             self.textbuffer.set_text(_("searching lyrics..."))
 
         self.set_menu_sensitive(True)
-
+        self.back_button.set_sensitive(True)
+        
         # Set event flag to indicate end of editing and wake all threads 
         # waiting to display new lyrics.
         self.edit_event.set()
@@ -761,12 +782,13 @@ class lLyrics(GObject.Object, Peas.Activatable):
         Gdk.threads_add_idle(GLib.PRIORITY_DEFAULT_IDLE, self.set_menu_sensitive, False)
 
         lyrics = ""
+        self.lyrics = ""
         if cache:
             lyrics = self.get_lyrics_from_cache(self.path)
 
-        if lyrics == "":
+        if self.lyrics == "":
             i = 0
-            while lyrics == "" and i in range(len(self.sources)):
+            while self.lyrics == "" and i in range(len(self.sources)):
                 lyrics = self.get_lyrics_from_source(self.sources[i], artist, title)
                 # check if playing song changed
                 if artist != self.clean_artist or title != self.clean_title:
@@ -782,7 +804,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
             print("song changed")
             return
 
-        if lyrics == "":
+        if self.lyrics == "":
             # check for lastfm corrections
             if not self.was_corrected:
                 self.was_corrected = True
@@ -805,25 +827,32 @@ class lLyrics(GObject.Object, Peas.Activatable):
         if os.path.exists(path):
             try:
                 cachefile = open(path, "r")
-                lyrics = cachefile.read()
+                self.lyrics = cachefile.read()
                 cachefile.close()
             except:
                 print("error reading cache file")
                 return ""
 
             print("got lyrics from cache")
-            return lyrics
+            rtn = re.sub(r'[\r\n\s]+$', '', self.lyrics)
+            if self.lyrics.find("\n\n" + re.sub(r'%s.*$', '', _("(lyrics from %s)"))) < 0:
+            	rtn += "\n"
+            rtn += _("Cache")
+            return rtn
 
         return ""
 
-    def write_lyrics_to_cache(self, path, lyrics):
+    def write_lyrics_to_file(self, path, lyrics):
+        folder_path = re.sub(r'[^/]+$', '', path)
         try:
+            if not os.path.exists(folder_path):
+                os.makedirs(folder_path)
             cachefile = open(path, "w+")
             cachefile.write(lyrics)
             cachefile.close()
-            print("wrote lyrics to cache file")
+            print("wrote lyrics to file")
         except:
-            print("error writing lyrics to cache file")
+            print("error writing lyrics to file")
 
     def get_lyrics_from_source(self, source, artist, title):
         # Playing song might change during search, so we want to 
@@ -839,20 +868,20 @@ class lLyrics(GObject.Object, Peas.Activatable):
             parser = self.dict[source].Parser(artist, title)
 
         try:
-            lyrics = parser.parse()
+            self.lyrics = parser.parse()
         except Exception as e:
             print("Error in parser " + source)
             print(str(e))
             return ""
 
-        if lyrics != "":
+        if self.lyrics != "":
             print("got lyrics from source")
             gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
-            lyrics = ("%s\n\n" + _("(lyrics from %s)")) % (lyrics, _(source))
+            self.lyrics += "\n\n" + (_("(lyrics from %s)") % _(source))
             if self.cache:
-                self.write_lyrics_to_cache(path, lyrics)
+                self.write_lyrics_to_file(path, self.lyrics)
 
-        return lyrics
+        return self.lyrics
 
     def show_lyrics(self, lyrics):
         gettext.install('lLyrics', os.path.dirname(__file__) + "/locale/")
@@ -876,7 +905,7 @@ class lLyrics(GObject.Object, Peas.Activatable):
         self.textbuffer.apply_tag(self.tag, start, end)
 
     def elapsed_changed(self, player, seconds):
-        if not self.tags or not self.edit_event.is_set():
+        if self.showing_on_demand or not self.tags or not self.edit_event.is_set():
             return
         seconds = float(seconds)
         self.lyric_seconds = seconds
@@ -927,3 +956,14 @@ class lLyrics(GObject.Object, Peas.Activatable):
         else:
             self.lyric_seconds = 0.0
         return True
+        
+    # This function will not be called
+    def i18n():
+        # Additional i18n support prepared for intltool
+        locale = _("LocalSameFolder")
+        locale = _("Media Lyrics Tags")
+        locale = _("Kugou.com")
+        locale = _("music.163.com")
+        locale = _("Kuwo.cn")
+        locale = _("From cache file")
+

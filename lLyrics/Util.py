@@ -59,7 +59,7 @@ def add_request_header(url):
 
 
 def parse_lrc(data):
-    tag_regex = "(\[\d+\:\d+\.\d*])"
+    tag_regex = "(\[\d+\:\d+\.\d+])"
     match = re.search(tag_regex, data)
 
     # no tags
@@ -74,6 +74,9 @@ def parse_lrc(data):
     for i in range(len(splitted)):
         if i % 2 == 0:
             # tag
+            # Prevent the next sentence from being highlighted prematurely due to blank lines
+            if splitted[i + 1] == "\n":
+                splitted[i + 1] = " \n"
             tags.append((time_to_seconds(splitted[i]), splitted[i + 1]))
         else:
             # lyrics

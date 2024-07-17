@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 20:02+0800\n"
+"POT-Creation-Date: 2024-07-17 14:32+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,93 +17,122 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../lLyrics.py:260 ../lLyrics.py:279
+#: ../lLyrics.py:263 ../lLyrics.py:282
 msgid "Lyrics"
 msgstr ""
 
-#: ../lLyrics.py:263
+#: ../lLyrics.py:266
 msgid "Display lyrics for the current playing song"
 msgstr ""
 
-#: ../lLyrics.py:267
+#: ../lLyrics.py:270
 msgid "Show lyrics"
 msgstr ""
 
-#: ../lLyrics.py:268
+#: ../lLyrics.py:271
 msgid "Search and display lyrics for this song"
 msgstr ""
 
 #. create save and cancel buttons for edited lyrics
-#: ../lLyrics.py:331
+#: ../lLyrics.py:334
 msgid "Save"
 msgstr ""
 
-#: ../lLyrics.py:333
+#: ../lLyrics.py:336
 msgid "Cancel"
 msgstr ""
 
 #. button for closing on demand lyrics
-#: ../lLyrics.py:340
+#: ../lLyrics.py:343
 msgid "Back to playing song"
 msgstr ""
 
-#: ../lLyrics.py:381 ../Config.py:305
+#: ../lLyrics.py:384 ../Config.py:305
 msgid "Sources"
 msgstr ""
 
-#: ../lLyrics.py:385
+#: ../lLyrics.py:388
 msgid "Scan next source"
 msgstr ""
 
-#: ../lLyrics.py:386
+#: ../lLyrics.py:389
 msgid "Scan all sources"
 msgstr ""
 
-#: ../lLyrics.py:388
+#: ../lLyrics.py:391
 msgid "Search online"
 msgstr ""
 
-#: ../lLyrics.py:390
+#: ../lLyrics.py:393
 msgid "Mark as instrumental"
 msgstr ""
 
-#: ../lLyrics.py:392
+#: ../lLyrics.py:395
 msgid "Clear lyrics"
 msgstr ""
 
-#: ../lLyrics.py:393
+#: ../lLyrics.py:396
 msgid "Edit lyrics"
 msgstr ""
 
-#: ../lLyrics.py:397
+#: ../lLyrics.py:400
 msgid "Preferences"
 msgstr ""
 
 #. Allow changing the default search engine through internationalization
-#: ../lLyrics.py:564
+#: ../lLyrics.py:567
 #, python-format
 msgid "http://www.google.com/search?q=%s+%s+lyrics"
 msgstr ""
 
-#: ../lLyrics.py:568
+#: ../lLyrics.py:571
 msgid "Instrumental"
 msgstr ""
 
-#: ../lLyrics.py:617
-msgid "lLyrics Preferences"
-msgstr ""
-
-#: ../lLyrics.py:675 ../lLyrics.py:699 ../lLyrics.py:730 ../lLyrics.py:755
-msgid "searching lyrics..."
-msgstr ""
-
-#: ../lLyrics.py:851
+#: ../lLyrics.py:605 ../lLyrics.py:833 ../lLyrics.py:875
 #, python-format
 msgid "(lyrics from %s)"
 msgstr ""
 
-#: ../lLyrics.py:866
+#: ../lLyrics.py:625
+msgid "lLyrics Preferences"
+msgstr ""
+
+#: ../lLyrics.py:683 ../lLyrics.py:715 ../lLyrics.py:746 ../lLyrics.py:771
+msgid "searching lyrics..."
+msgstr ""
+
+#: ../lLyrics.py:835
+msgid "Cache"
+msgstr ""
+
+#: ../lLyrics.py:890
 msgid "No lyrics found"
+msgstr ""
+
+#. Additional i18n support prepared for intltool
+#: ../lLyrics.py:958
+msgid "LocalSameFolder"
+msgstr ""
+
+#: ../lLyrics.py:959
+msgid "Media Lyrics Tags"
+msgstr ""
+
+#: ../lLyrics.py:960
+msgid "Kugou.com"
+msgstr ""
+
+#: ../lLyrics.py:961
+msgid "music.163.com"
+msgstr ""
+
+#: ../lLyrics.py:962
+msgid "Kuwo.cn"
+msgstr ""
+
+#: ../lLyrics.py:963
+msgid "From cache file"
 msgstr ""
 
 #: ../Config.py:146
